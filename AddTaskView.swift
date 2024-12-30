@@ -1,16 +1,9 @@
-//
-//  ADdTaskView.swift
-//  TaskManager
-//
-//  Created by Guest Acc on 26.12.2024.
-//
-
 import SwiftUI
 import CoreData
 
 struct AddTaskView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var viewModel: TaskManagerViewModel
     
     @State var taskNameString: String = ""
     @State var taskDescriprion: String = ""
@@ -37,7 +30,7 @@ struct AddTaskView: View {
                 }
             }
             Button ("Create Task") {
-                createTask(taskName: taskNameString, deadlineDay: taskDeadlineDay, deadlineTime: taskDeadlineDay, context: viewContext)
+                createTask(taskName: taskNameString, deadlineDay: taskDeadlineDay, deadlineTime: taskDeadlineDay, context: viewModel.context)
             } .buttonStyle(BlueButton())
         }
     }
@@ -61,5 +54,5 @@ struct AddTaskView: View {
  }
 
 #Preview {
-    AddTaskView()
+    AddTaskView(viewModel: TaskManagerViewModel(context: PersistentController.shared.container.viewContext))
 }

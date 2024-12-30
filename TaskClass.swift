@@ -17,4 +17,9 @@ class TaskClass: NSManagedObject {
     @NSManaged var deadlineTime: Date?
     
     @NSManaged var id: UUID
+    
+    override var debugDescription: String {
+        return "id: \(id), taskName: \(taskName), isCompleted: \(isCompleted)"
+    }
+    
 }

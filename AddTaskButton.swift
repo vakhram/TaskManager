@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct AddTaskButton: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var viewModel: TaskManagerViewModel
     
     var body: some View {
         HStack {
-            NavigationLink(destination: AddTaskView().environment(\.managedObjectContext, viewContext)) {
+            NavigationLink(destination: AddTaskView(viewModel: viewModel)) {
                     Text("+ New Task")
                 }
                 .padding(15)

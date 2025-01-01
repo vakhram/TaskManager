@@ -37,19 +37,18 @@ struct AddTaskView: View {
     
     func createTask(taskName: String?, deadlineDay: Date?, deadlineTime: Date?, context: NSManagedObjectContext) {
         let task = TaskClass(context: context)
-            task.taskName = taskName ?? "🥵"
-            task.deadlineDay = deadlineDay
-            task.deadlineTime = deadlineTime
-            task.isCompleted = false
-            task.id = UUID()
-//        "\(Int.random(in: 1..<100000))" + (["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"].randomElement() ?? "a")
-
-            do {
-                try context.save()
-                print("success")
-            } catch {
-                print("Failed to save task: \(error.localizedDescription)")
-            }
+        task.taskName = taskName ?? "🥵"
+        task.deadlineDay = deadlineDay
+        task.deadlineTime = deadlineTime
+        task.isCompleted = false
+        task.id = UUID()
+        
+        do {
+            try context.save()
+            print("success")
+        } catch {
+            print("Failed to save task: \(error.localizedDescription)")
+        }
     }
  }
 

@@ -33,7 +33,7 @@ class TaskManagerViewModel: ObservableObject {
     func toggleTaskCompletion(_ task: TaskClass) {
         task.isCompleted.toggle()
         saveContext()
-        fetchTasks() // Обновляем список задач
+        fetchTasks()
     }
 
     private func saveContext() {

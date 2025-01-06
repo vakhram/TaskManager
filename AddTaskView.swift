@@ -10,7 +10,7 @@ import CoreData
 
 struct AddTaskView: View {
     
-    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var viewModel: TaskManagerViewModel
     
     @State var taskNameString: String = ""
     @State var taskDescriprion: String = ""
@@ -18,27 +18,23 @@ struct AddTaskView: View {
     @State var taskDeadlineTime: Date = .now
     
     var body: some View {
-        VStack {
-            Text("Add a new Task")
-                .font(.system(size: 27, weight: .bold))
-                .padding(25)
-            Form {
-                TextField(text: $taskNameString) {
-                    Text("Name:")
-                }
-                TextField(text: $taskDescriprion) {
-                    Text("Description")
-                }
-                DatePicker(selection: $taskDeadlineDay) {
-                    Text("Deadline Day")
-                }
-                DatePicker(selection: $taskDeadlineTime) {
-                    Text("Deadline Time")
-                }
-            }
-            Button ("Create Task") {
-                createTask(taskName: taskNameString, deadlineDay: taskDeadlineDay, deadlineTime: taskDeadlineDay, context: viewContext)
-            } .buttonStyle(BlueButton())
+        NavigationStack {
+            VStack {
+                Form {
+                    TextField(text: $taskNameString) {
+                        Text("Name:")
+                    }
+                    TextField(text: $taskDescriprion) {
+                        Text("Description")
+                    }
+                    DatePicker(selection: $taskDeadlineDay, displayedComponents: [.date]) {
+                        Text("Deadline Day")
+                    }
+                }.datePickerStyle(.graphical)
+                Button ("Create Task") {
+                    createTask(taskName: taskNameString, deadlineDay: taskDeadlineDay, deadlineTime: taskDeadlineDay, context: viewModel.context)
+                } .buttonStyle(BlueButton())
+            } 
         }
     }
     
@@ -61,5 +57,5 @@ struct AddTaskView: View {
  }
 
 #Preview {
-    AddTaskView()
+    AddTaskView(viewModel: TaskManagerViewModel(context: PersistentController.shared.container.viewContext) )
 }

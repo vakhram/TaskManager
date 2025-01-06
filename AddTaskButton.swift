@@ -7,18 +7,36 @@
 
 import SwiftUI
 
-struct AddTaskButton: View {
-    @Environment(\.managedObjectContext) private var viewContext
+
+struct TasksButton: View {
+    enum ButtonType {
+        case edit
+        case add
+    }
+    
+    @ObservedObject var viewModel: TaskManagerViewModel
+    var type: ButtonType
     
     var body: some View {
         HStack {
-            NavigationLink(destination: AddTaskView().environment(\.managedObjectContext, viewContext)) {
-                    Text("+ New Task")
-                }
-                .padding(15)
-                .background(Color(red: 0, green: 0, blue: 0.5))
-                .foregroundStyle(.white)
-                .clipShape(.buttonBorder)
+            switch type {
+            case .edit:
+                NavigationLink(destination: AddTaskView(viewModel: viewModel)) {
+                        Text("+ New Task")
+                    }
+                    .padding(15)
+                    .background(Color(red: 0, green: 0, blue: 0.5))
+                    .foregroundStyle(.white)
+                    .clipShape(.buttonBorder)
+            case .add:
+                NavigationLink(destination: AddTaskView(viewModel: viewModel)) {
+                        Text("+ New Task")
+                    }
+                    .padding(15)
+                    .background(Color(red: 0, green: 0, blue: 0.5))
+                    .foregroundStyle(.white)
+                    .clipShape(.buttonBorder)
+            }
         }
         .padding(.top)
     }

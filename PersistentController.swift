@@ -14,8 +14,6 @@ class PersistentController {
     let container = NSPersistentContainer(name: "TaskModel")
     
     init() {
-        let container = NSPersistentContainer(name: "TaskModel")
-        
         container.loadPersistentStores { description, error in
             if let error = error {
                 print("Ошибка загрузки Core Data: \(error.localizedDescription)")

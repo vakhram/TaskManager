@@ -16,7 +16,7 @@ struct ContentView: View {
 
     @ViewBuilder
     var body: some View {
-        return NavigationStack {
+        NavigationStack {
             VStack {
                 ScrollView {
                     TaskListView(viewModel: viewModel, type: .uncompleted)

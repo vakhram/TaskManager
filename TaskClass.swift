@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 @objc(TaskClass)
-class TaskClass: NSManagedObject {
+class TaskClass: NSManagedObject, Identifiable {
     
     @NSManaged var taskName: String
     @NSManaged var isCompleted: Bool

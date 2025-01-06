@@ -1,16 +1,22 @@
 //
-//  DataController.swift
+//  Data Controller.swift
 //  TaskManager
 //
-//  Created by Guest Acc on 26.12.2024.
+//  Created by Guest Acc on 28.12.2024.
 //
 
+import Foundation
 import CoreData
 
-class DataController: ObservableObject {
-    let container = NSPersistentContainer(name: "TaskModel")
+struct PersistentController {
+    
+    static let shared = PersistentController()
+    
+    let container: NSPersistentContainer
+    
     
     init() {
+        container = NSPersistentContainer(name: "TaskModel")
         container.loadPersistentStores { description, error in
             if let error = error {
                 print("Ошибка загрузки Core Data: \(error.localizedDescription)")

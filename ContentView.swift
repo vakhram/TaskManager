@@ -33,17 +33,18 @@ struct ContentView: View {
 //                }
 //            }
             .onAppear {
+                AddTaskButton(viewModel: viewModel)
+            } .onAppear {
                 viewModel.fetchTasks()
             }
         }
+        .preferredColorScheme(.dark)
     }
 }
 
 struct TaskView: View {
     @ObservedObject var viewModel: TaskManagerViewModel
-    var dateFormatter: DateFormatter = .createdateFormatter(with: .date)
     var task: TaskClass
-    @State var isOnToggle: Bool = false
     
     var body: some View {
         NavigationView {
@@ -70,7 +71,7 @@ struct TaskView: View {
                     }
                 }
             }
-        } .toggleStyle(CheckBoxToggleStyle())
+        }
     }
 }
 

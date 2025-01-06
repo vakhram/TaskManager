@@ -18,7 +18,7 @@ struct CheckBoxToggleStyle: ToggleStyle {
                                 Image(systemName: configuration.isOn ? "checkmark" : "")
                             }
                             .onTapGesture {
-                                withAnimation(.spring()) {
+                                withAnimation(.easeInOut) {
                                     configuration.isOn.toggle()
                                 }
                             }

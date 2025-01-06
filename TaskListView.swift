@@ -9,7 +9,6 @@ import Foundation
 import SwiftUI
 
 struct TaskListView: View {
-    
     enum ListType {
         case uncompleted
         case completed
@@ -51,7 +50,6 @@ struct TaskListView: View {
                 Text("All Tasks")
             }
         })
-        
         .padding(20)
         .foregroundColor(colorScheme == .dark ? .white : .black)
     }

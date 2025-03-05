@@ -28,6 +28,7 @@ class TaskManagerViewModel: ObservableObject {
             tasks =  try context.fetch(fetchRequest)
             sortedTasks = sortTasksByDeadlineDay(tasks: tasks)
             fetchRequest.sortDescriptors = [NSSortDescriptor(keyPath: \TaskClass.deadlineDay, ascending: true)]
+            debugPrint(sortedTasks)
         } catch {
             print("Error fetching tasks: \(error)")
         }
@@ -47,7 +48,6 @@ class TaskManagerViewModel: ObservableObject {
         }
     }    
     func sortTasksByDeadlineDay(tasks: [TaskClass]) -> [(Date?,[TaskClass])] {
-        // Группируем задачи по дню дедлайна
         let grouped = Dictionary(grouping: tasks) { task -> Date? in
                     guard let deadline = task.deadlineDay else { return nil }
                     return Calendar.current.startOfDay(for: deadline)

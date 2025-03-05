@@ -9,11 +9,11 @@ struct AddTaskView: View {
     @State var taskDescriprion: String = ""
     @State var taskDeadlineDay: Date = .now
     @State var taskDeadlineTime: Date = .now
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
+            List {
                     TextField(text: $taskNameString) {
                         Text("Name:")
                     }
@@ -23,11 +23,11 @@ struct AddTaskView: View {
                     DatePicker(selection: $taskDeadlineDay, displayedComponents: [.date]) {
                         Text("Deadline Day")
                     }
-                }.datePickerStyle(.graphical)
+
                 Button ("Create Task") {
                     createTask(taskName: taskNameString, deadlineDay: taskDeadlineDay, deadlineTime: taskDeadlineDay, context: viewModel.context)
                 } .buttonStyle(BlueButton())
-            } 
+            }.datePickerStyle(.graphical)
         }
     }
     
@@ -41,6 +41,7 @@ struct AddTaskView: View {
         
         do {
             try context.save()
+            dismiss()
             print("success")
         } catch {
             print("Failed to save task: \(error.localizedDescription)")

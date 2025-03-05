@@ -9,36 +9,31 @@ import SwiftUI
 
 struct ContentView: View {
 
-    @ObservedObject var viewModel: TaskManagerViewModel = TaskManagerViewModel(context: PersistentController.shared.container.viewContext)
-    @State var isEditing: Bool = false
-    @State var isDeleting: Bool = false
-    @State var selectedTask: TaskClass?
-
-    @ViewBuilder
+    @StateObject var viewModel: TaskManagerViewModel = TaskManagerViewModel(context: PersistentController.shared.container.viewContext)
+        
     var body: some View {
-        NavigationStack {
-            VStack {
+        NavigationView {
+            List {
                 ScrollView {
-                    TaskListView(viewModel: viewModel, type: .uncompleted)
-                    TaskListView(viewModel: viewModel, type: .completed)
+//                    TaskListView(viewModel: viewModel, type: .uncompleted)
+//                    TaskListView(viewModel: viewModel, type: .completed)
+                    DayTaskListView(viewModel: viewModel, type: .uncompleted)
+                    DayTaskListView(viewModel: viewModel, type: .completed)
                 }
-                TasksButton(viewModel: viewModel, type: .add    )
             }
+            .toolbar(content: {
+                ToolbarItem {
+                    NavigationLink(destination: AddTaskView(viewModel: viewModel)) {
+                        Label("Add image", systemImage: "plus")
+                    }
+                }
+            })
             .navigationTitle("Vakhram Task Manager")
-//            .toolbar {
-//                ToolbarItem(placement: .topBarTrailing) {
-//                    Button("Edit") {
-//                        isEditing.toggle()
-//                    }
-//                }
-//            }
-            .onAppear {
-                AddTaskButton(viewModel: viewModel)
-            } .onAppear {
+            .task {
                 viewModel.fetchTasks()
             }
         }
-        .preferredColorScheme(.dark)
+        .preferredColorScheme(.light)
     }
 }
 
@@ -61,14 +56,8 @@ struct TaskView: View {
                             viewModel.toggleTaskCompletion(task)
                         }
                     }
-                if let date = task.deadlineDay {
-                    NavigationLink(destination: EditTaskView(viewModel: viewModel, currentTask: task)) {
-                        Text(task.taskName + " \(DateFormatter.createdateFormatter(with: .date).string(from: date))")
-                    }
-                } else {
-                    NavigationLink(destination: EditTaskView(viewModel: viewModel, currentTask: task)) {
-                        Text(task.taskName)
-                    }
+                NavigationLink(destination: EditTaskView(viewModel: viewModel, currentTask: task)) {
+                    Text(task.deadlineTime == nil ? task.taskName : task.taskName + " \(DateFormatter.createdateFormatter(with: .time).string(from: task.deadlineTime!))")
                 }
             }
         }

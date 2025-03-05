@@ -66,7 +66,7 @@ struct EditTaskView: View {
     
     private func editTask(atIndex: Int?, taskName: String?, deadlineDay: Date?, deadlineTime: Date?, context: NSManagedObjectContext) {
         guard let index = atIndex else { return }
-        var task = viewModel.tasks[index]
+        let task = viewModel.tasks[index]
         task.taskName = taskName ?? "🥵"
         task.deadlineDay = deadlineDay
         task.deadlineTime = deadlineTime
@@ -74,6 +74,7 @@ struct EditTaskView: View {
         
         do {
             try context.save()
+            dismiss()
             print("success")
         } catch {
             print("Failed to save task: \(error.localizedDescription)")
@@ -98,6 +99,7 @@ struct EditTaskView: View {
         
         do {
             try context.save()
+            dismiss()
         } catch {
             print("DELETED UNSUCCESSFULLY")
         }
